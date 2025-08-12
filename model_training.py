@@ -406,19 +406,64 @@ print('\n')
 print('> LinearRegression model test results')
 print(f'r2_score: {r2_score(y_test, lr_y_pred)}')
 print(f'MSE: {mean_squared_error(y_test, lr_y_pred)}')
-print(f'MAE: {mean_squared_error(y_test, lr_y_pred)}')
-
-
-
-
-
+print(f'MAE: {mean_absolute_error(y_test, lr_y_pred)}')
 #input()
 
 
+#Ridge Regression
+rd_r = Ridge()
+rd_pipeline = make_pipeline(mct, rd_r)
+
+rd_r_param_grid = {
+    'ridge__alpha': [0.01, 0.1, 1.0, 10.0, 100.0]
+}
+
+rd_r_CV = GridSearchCV(rd_pipeline, rd_r_param_grid, cv = 3, n_jobs = -1)
+rd_r_CV.fit(X_train, y_train)
+
+rd_best_pipe = rd_r_CV.best_estimator_
+rd_y_pred = rd_best_pipe.predict(X_test)
+
+print('\n')
+print('> Ridge Regression model information')
+print(f'best_params: {rd_r_CV.best_params_}')
+print(f'best_score: {rd_r_CV.best_score_}')
+
+print('\n')
+print('> Ridge Regression test results')
+print(f'r2_score: {r2_score(y_test, rd_y_pred)}')
+print(f'MSE: {mean_squared_error(y_test, rd_y_pred)}')
+print(f'MAE: {mean_absolute_error(y_test, rd_y_pred)}')
+
+
+# Lasso regression
+ls_r = Lasso()
+ls_pipeline = make_pipeline(mct, ls_r)
+
+ls_r_param_grid = {
+    'lasso__alpha': [0.01, 0.1, 1.0, 10.0, 100.0]
+}
+
+ls_r_CV = GridSearchCV(ls_pipeline, ls_r_param_grid, cv=3, n_jobs=-1)
+ls_r_CV.fit(X_train, y_train)
+
+ls_best_pipe = ls_r_CV.best_estimator_
+ls_y_pred = ls_best_pipe.predict(X_test)
+
+print('\n')
+print('> Lasso Regression model information')
+print(f'best_params: {ls_r_CV.best_params_}')
+print(f'best_score: {ls_r_CV.best_score_}')
+
+print('\n')
+print('> Lasso Regression test results')
+print(f'r2_score: {r2_score(y_test, ls_y_pred)}')
+print(f'MSE: {mean_squared_error(y_test, ls_y_pred)}')
+print(f'MAE: {mean_absolute_error(y_test, ls_y_pred)}')
+ 
+
+
 # ElasticNet Regression
-# Also can test 'Ridge Regression' and 'Lasso Regression' at the same time
-# 'Ridge Regression' l1_ratio = 0
-# 'Lasso Regression' l1_ratio = 1
 etn_r = ElasticNet()
 etn_pipeline = make_pipeline(mct, etn_r)
 
@@ -442,7 +487,7 @@ print('\n')
 print('> ElasticNet Regression test results')
 print(f'r2_score: {r2_score(y_test, etn_y_pred)}')
 print(f'MSE: {mean_squared_error(y_test, etn_y_pred)}')
-print(f'MAE: {mean_squared_error(y_test, etn_y_pred)}')
+print(f'MAE: {mean_absolute_error(y_test, etn_y_pred)}')
 
 
 
