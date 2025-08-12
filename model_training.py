@@ -17,10 +17,12 @@ from sklearn.impute import SimpleImputer
 from sklearn.compose import make_column_transformer
 
 #model import
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import Ridge
-from sklearn.linear_model import ElasticNet
+from sklearn.linear_model import LinearRegression, Lasso, Ridge, ElasticNet
+
+from sklearn.svm import SVR
+
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+
 
 from sklearn.pipeline import Pipeline, make_pipeline
 
@@ -381,6 +383,8 @@ mct = make_column_transformer(
 #Step3. Model training
 ############################
 
+result = []
+
 #LinearRegression model
 lr = LinearRegression()
 lr_pipeline = make_pipeline(mct, lr)
@@ -407,6 +411,15 @@ print('> LinearRegression model test results')
 print(f'r2_score: {r2_score(y_test, lr_y_pred)}')
 print(f'MSE: {mean_squared_error(y_test, lr_y_pred)}')
 print(f'MAE: {mean_absolute_error(y_test, lr_y_pred)}')
+
+result.append([
+    'LinearRegression', 
+    lr_CV.best_params_, 
+    lr_CV.best_score_,
+    r2_score(y_test, lr_y_pred),
+    mean_squared_error(y_test, lr_y_pred),
+    mean_absolute_error(y_test, lr_y_pred)
+    ])
 #input()
 
 
@@ -435,6 +448,15 @@ print(f'r2_score: {r2_score(y_test, rd_y_pred)}')
 print(f'MSE: {mean_squared_error(y_test, rd_y_pred)}')
 print(f'MAE: {mean_absolute_error(y_test, rd_y_pred)}')
 
+result.append([
+    'Ridge Regressionn', 
+    rd_r_CV.best_params_, 
+    rd_r_CV.best_score_,
+    r2_score(y_test, rd_y_pred),
+    mean_squared_error(y_test, rd_y_pred),
+    mean_absolute_error(y_test, rd_y_pred)
+    ])
+
 
 # Lasso regression
 ls_r = Lasso()
@@ -460,6 +482,15 @@ print('> Lasso Regression test results')
 print(f'r2_score: {r2_score(y_test, ls_y_pred)}')
 print(f'MSE: {mean_squared_error(y_test, ls_y_pred)}')
 print(f'MAE: {mean_absolute_error(y_test, ls_y_pred)}')
+
+result.append([
+    'Lasso Regression', 
+    ls_r_CV.best_params_, 
+    ls_r_CV.best_score_,
+    r2_score(y_test, ls_y_pred),
+    mean_squared_error(y_test, ls_y_pred),
+    mean_absolute_error(y_test, ls_y_pred)
+    ])
  
 
 
@@ -489,5 +520,133 @@ print(f'r2_score: {r2_score(y_test, etn_y_pred)}')
 print(f'MSE: {mean_squared_error(y_test, etn_y_pred)}')
 print(f'MAE: {mean_absolute_error(y_test, etn_y_pred)}')
 
+result.append([
+    'ElasticNet Regression', 
+    etn_r_CV.best_params_, 
+    etn_r_CV.best_score_,
+    r2_score(y_test, etn_y_pred),
+    mean_squared_error(y_test, etn_y_pred),
+    mean_absolute_error(y_test, etn_y_pred)
+    ])
 
+
+
+#SVR
+svr_r = SVR()
+svr_pipeline = make_pipeline(mct, svr_r)
+
+svr_r_param_grid = {
+    'svr__kernel': ['rbf', 'linear'],
+    'svr__C': [0.1, 1, 10, 100],
+    'svr__gamma': ['scale', 'auto']
+}
+
+svr_r_CV = GridSearchCV(svr_pipeline, svr_r_param_grid, cv=3, n_jobs=-1)
+svr_r_CV.fit(X_train, y_train)
+
+svr_best_pipe = svr_r_CV.best_estimator_
+svr_y_pred = svr_best_pipe.predict(X_test)
+
+print('\n')
+print('> SVR model information')
+print(f'best_params: {svr_r_CV.best_params_}')
+print(f'best_score: {svr_r_CV.best_score_}')
+
+print('\n')
+print('> SVR test results')
+print(f'r2_score: {r2_score(y_test, svr_y_pred)}')
+print(f'MSE: {mean_squared_error(y_test, svr_y_pred)}')
+print(f'MAE: {mean_absolute_error(y_test, svr_y_pred)}')
+
+result.append([
+    'SVR', 
+    svr_r_CV.best_params_, 
+    svr_r_CV.best_score_,
+    r2_score(y_test, svr_y_pred),
+    mean_squared_error(y_test, svr_y_pred),
+    mean_absolute_error(y_test, svr_y_pred)
+    ])
+
+
+#RandomForestRegressor
+rf_r = RandomForestRegressor(random_state = 1)
+rf_pipeline = make_pipeline(mct, rf_r)
+
+rf_r_param_grid = {
+    'randomforestregressor__n_estimators': [100, 200, 500], 
+    'randomforestregressor__max_depth': [None, 5, 10],
+    'randomforestregressor__min_samples_split': [2, 5, 10],
+    'randomforestregressor__min_samples_leaf': [1, 2, 4]
+}
+
+rf_r_CV = GridSearchCV(rf_pipeline, rf_r_param_grid, cv=3, n_jobs=-1)
+rf_r_CV.fit(X_train, y_train)
+
+rf_best_pipe = rf_r_CV.best_estimator_
+rf_y_pred = rf_best_pipe.predict(X_test)
+
+print('\n')
+print('> RandomForestRegressor model information')
+print(f'best_params: {rf_r_CV.best_params_}')
+print(f'best_score: {rf_r_CV.best_score_}')
+
+print('\n')
+print('> RandomForestRegressor test results')
+print(f'r2_score: {r2_score(y_test, rf_y_pred)}')
+print(f'MSE: {mean_squared_error(y_test, rf_y_pred)}')
+print(f'MAE: {mean_absolute_error(y_test, rf_y_pred)}')
+
+result.append([
+    'RandomForestRegressor', 
+    rf_r_CV.best_params_, 
+    rf_r_CV.best_score_,
+    r2_score(y_test, rf_y_pred),
+    mean_squared_error(y_test, rf_y_pred),
+    mean_absolute_error(y_test, rf_y_pred)
+    ])
+
+
+
+# GradientBoostingRegressor
+gbr = GradientBoostingRegressor(random_state=1)
+gbr_pipeline = make_pipeline(mct, gbr)
+
+gbr_param_grid = {
+    'gradientboostingregressor__n_estimators': [100, 200, 500],
+    'gradientboostingregressor__learning_rate': [0.03, 0.05, 0.1],
+    'gradientboostingregressor__max_depth': [2, 3, 5],
+    'gradientboostingregressor__subsample': [1.0, 0.7, 0.5],
+    'gradientboostingregressor__min_samples_split': [2, 5, 10],
+    'gradientboostingregressor__min_samples_leaf': [1, 2, 4],
+}
+
+gbr_CV = GridSearchCV(gbr_pipeline, gbr_param_grid, cv=3, n_jobs=-1)
+gbr_CV.fit(X_train, y_train)
+
+gbr_best_pipe = gbr_CV.best_estimator_
+gbr_y_pred = gbr_best_pipe.predict(X_test)
+
+print('\n')
+print('> GradientBoostingRegressor model information')
+print(f'best_params: {gbr_CV.best_params_}')
+print(f'best_score: {gbr_CV.best_score_}')
+
+print('\n')
+print('> GradientBoostingRegressor test results')
+print(f'r2_score: {r2_score(y_test, gbr_y_pred)}')
+print(f'MSE: {mean_squared_error(y_test, gbr_y_pred)}')
+print(f'MAE: {mean_absolute_error(y_test, gbr_y_pred)}')
+
+result.append([
+    'GradientBoostingRegressor', 
+    gbr_CV.best_params_, 
+    gbr_CV.best_score_,
+    r2_score(y_test, gbr_y_pred),
+    mean_squared_error(y_test,gbr_y_pred),
+    mean_absolute_error(y_test, gbr_y_pred)
+    ])
+
+results_df = pd.DataFrame(result, columns = ['model','best_params','best_score','r2_score','mean_squared_error','mean_absolute_error'])
+print(results_df)
+results_df.to_csv('model_results.csv', index = False)
 

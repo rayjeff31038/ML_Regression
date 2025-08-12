@@ -1,0 +1,8 @@
+model,best_params,best_score,r2_score,mean_squared_error,mean_absolute_error
+LinearRegression,"{'linearregression__fit_intercept': False, 'linearregression__positive': False}",0.9556192511127013,0.9592950107842889,0.07732862484606025,0.17616100918135932
+Ridge Regressionn,{'ridge__alpha': 0.1},0.9556850194671518,0.9592300750794343,0.07745198536909621,0.1763793051204828
+Lasso Regression,{'lasso__alpha': 0.01},0.9456941740295369,0.9516797075025868,0.0917956703337524,0.21329742981185873
+ElasticNet Regression,"{'elasticnet__alpha': 0.01, 'elasticnet__l1_ratio': 0.1}",0.9544841071331893,0.9565952512923083,0.0824574479449589,0.18490193235374003
+SVR,"{'svr__C': 10, 'svr__gamma': 'auto', 'svr__kernel': 'rbf'}",0.9645800554289284,0.9702906913809407,0.056439763893914224,0.09167939893391387
+RandomForestRegressor,"{'randomforestregressor__max_depth': 5, 'randomforestregressor__min_samples_leaf': 1, 'randomforestregressor__min_samples_split': 2, 'randomforestregressor__n_estimators': 100}",0.9721955478095413,0.9824481962984632,0.03334374655193282,0.05321382433261354
+GradientBoostingRegressor,"{'gradientboostingregressor__learning_rate': 0.05, 'gradientboostingregressor__max_depth': 3, 'gradientboostingregressor__min_samples_leaf': 2, 'gradientboostingregressor__min_samples_split': 5, 'gradientboostingregressor__n_estimators': 200, 'gradientboostingregressor__subsample': 0.7}",0.9783526581050356,0.978147261916266,0.041514374962272296,0.04354162620226482
