@@ -34,6 +34,9 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+#save model
+import joblib
+
 #The file was downloaded from Kaggle: "Sleep Health and Lifestyle Dataset".
 #https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset/code
 #read the file
@@ -637,6 +640,8 @@ print(f'r2_score: {r2_score(y_test, gbr_y_pred)}')
 print(f'MSE: {mean_squared_error(y_test, gbr_y_pred)}')
 print(f'MAE: {mean_absolute_error(y_test, gbr_y_pred)}')
 
+
+#model results df
 result.append([
     'GradientBoostingRegressor', 
     gbr_CV.best_params_, 
@@ -648,5 +653,15 @@ result.append([
 
 results_df = pd.DataFrame(result, columns = ['model','best_params','best_score','r2_score','mean_squared_error','mean_absolute_error'])
 print(results_df)
+
+
 results_df.to_csv('model_results.csv', index = False)
 
+
+# Based on the results_df,
+# the RandomForestRegressor shows the highest r2 score (0.98) and very low MSE (0.03) and MAE (0.05).
+# 'RandomForestRegressor' is the best model choice for this project.
+
+
+#model output
+joblib.dump(rf_best_pipe, 'RandomForestRegressor_best_model.pkl')
