@@ -8,6 +8,7 @@ This dataset contains information about sleep quality and various lifestyle fact
 ## Aim
 The goal of this project is to predict sleep quality based on lifestyle factors using regression models. 
 
+
 ## Data Description
 Person ID: Unique identifier for each individual.
 
@@ -34,6 +35,7 @@ Heart Rate (bpm): Resting heart rate in beats per minute.
 Daily Steps: Number of steps taken per day.
 
 Sleep Disorder: Type of sleep disorder present, if any (None, Insomnia, Sleep Apnea).
+
 
 ## Analysis Workflow
 1. Data Exploring
