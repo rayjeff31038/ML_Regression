@@ -3,7 +3,20 @@ This project demonstrates how to build a regression machine learning model using
 The raw data (`Sleep_health_and_lifestyle_dataset.csv`) was downloaded from Kaggle:  
 [Sleep Health and Lifestyle Dataset](https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset/data)
 
-This dataset contains information about sleep quality and various lifestyle factors.  
+This dataset contains information about sleep quality and various lifestyle factors.
+
+## Project File Descriptions
+1. Sleep_health_and_lifestyle_dataset.csv – The raw dataset containing sleep health and lifestyle information.
+
+2. model_training.py – Python script containing the regression model training process.
+
+3. Visualization PNG files – Plots generated from exploratory data analysis (EDA) and saved as .png images.
+
+4. model_results.csv – A DataFrame summarizing the performance of each regression model.
+
+5. RandomForestRegressor_best_model.pkl – The serialized best-performing model (RandomForestRegressor) saved using joblib.
+
+
 
 ## Aim
 The goal of this project is to predict sleep quality based on lifestyle factors using regression models. 
