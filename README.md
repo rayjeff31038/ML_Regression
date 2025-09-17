@@ -6,7 +6,7 @@ The raw data (`Sleep_health_and_lifestyle_dataset.csv`) was downloaded from Kagg
 This dataset contains information about sleep quality and various lifestyle factors.
 
 ## Project File Descriptions
-1. Sleep_health_and_lifestyle_dataset.csv – The raw dataset containing sleep health and lifestyle information.
+1. Sleep_health_and_lifestyle_dataset.csv – The raw dataset containing sleep health and lifestyle informations.
 
 2. model_training.py – Python script containing the regression model training process.
 
