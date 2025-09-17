@@ -1,5 +1,5 @@
 # ML_Regression
-This project demonstrates how to build a regression machine learning model using the Scikit-learn package.  
+This project demonstrates how to build regression machine learning models using the Scikit-learn package.  
 The raw data (`Sleep_health_and_lifestyle_dataset.csv`) was downloaded from Kaggle:  
 [Sleep Health and Lifestyle Dataset](https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset/data)
 
@@ -56,6 +56,7 @@ Sleep Disorder: Type of sleep disorder present, if any (None, Insomnia, Sleep Ap
      
 2. Data Preprocessing
    -Based on the EDA results, perform transformations on the dataset’s columns — for example, standardize numerical columns, and convert categorical columns into numerical format using OneHotEncoder or OrdinalEncoder.
+   -Standardize numerical columns, and process categorical columns by addressing issues such as highly correlated features and categories with excessive cardinality (merging or grouping them when necessary)
    
 3. Model training
    -Multiple regression models will be trained and compared to evaluate their performance.
