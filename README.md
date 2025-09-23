@@ -16,6 +16,15 @@ This dataset contains information about sleep quality and various lifestyle fact
 
 5. RandomForestRegressor_best_model.pkl – The serialized best-performing model (RandomForestRegressor) saved using joblib.
 
+6. environment.yml - Environment setup and package installation
+
+## Environment Setup and Package Installation
+Please use Conda to create the environment by reading "environment.yml"  
+```
+conda env create -f environment.yml
+```
+
+
 
 
 ## Aim
